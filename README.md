@@ -96,3 +96,73 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+
+## Setup
+
+```bash
+# Create a project
+$ nest new nestjs-graphql-mongodb
+# then choose npm
+
+# Install graphql apollo
+$ npm install graphql graphql-tools apollo-server-express @nestjs/graphql @nestjs/apollo
+
+# Install typeORM
+$ npm install typeorm @nestjs/typeorm mongodb @types/mongodb uuid
+
+# Create service
+$ nest g service --no-spec
+
+# Install class validator class-transformer
+$ npm install class-validator class-transformer
+```
+
+
+## GraphQL Query
+http://localhost:3000/graphql
+
+```sql
+query {
+  lesson {
+    name, startDate
+  }
+}
+
+# Write your query or mutation here
+mutation {
+  createLesson(
+    name: "Sports"
+    startDate: "2025-09-23T13:00:00Z"
+    endDate: "2025-09-23T14:55:00Z"
+  ) {
+    name, id
+  }
+}
+
+# Write your query or mutation here
+query {
+  lesson(id: "d11105b1-9565-44a2-b82f-8b26df331b23") {
+    name
+  }
+}
+
+query {
+  allLessons {
+    id, name, startDate
+  }
+}
+
+
+mutation {
+  createStudent(
+    createStudentInput: {
+      firstName: "Hendy"
+      lastName: "Tham"
+    }
+  ) {
+    id, firstName, lastName
+  }
+}
+```
