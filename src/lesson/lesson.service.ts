@@ -16,17 +16,30 @@ export class LessonService {
   }
 
   async createLesson(createLessonInput: CreateLessonInput): Promise<Lesson> {
-    const { name, startDate, endDate } = createLessonInput;
+    const { name, startDate, endDate, students } = createLessonInput;
     const lesson = this.lessonRepository.create({
       id: uuidv4(),
       name,
       startDate,
       endDate,
+      students
     });
     return this.lessonRepository.save(lesson);
   }
 
   async getAllLessons(): Promise<Lesson[]> {
     return this.lessonRepository.find();
+  }
+
+  async assignStudentsToLesson(
+    lessonId: string,
+    studentsIds: string[],
+  ): Promise<Lesson> {
+    const lesson = await this.lessonRepository.findOneBy({ id: lessonId });
+    if (!lesson) {
+      throw new Error(`Lesson with id ${lessonId} not found`);
+    }
+    lesson.students = [...lesson.students, ...studentsIds];
+    return this.lessonRepository.save(lesson);
   }
 }
